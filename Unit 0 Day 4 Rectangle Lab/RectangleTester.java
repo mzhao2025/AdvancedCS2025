@@ -21,5 +21,20 @@ public class RectangleTester {
 
         System.out.println(rect1.getDiagonal());
         System.out.println(rect2.getDiagonal());
+        
+        int r1length = rect1.getLength();
+        int r1width = rect1.getWidth();
+
+        int[][] rotatedPoints = rect1.rotate90(0, 0, r1length, r1width, 0, 0, 18);
+        for (int i = 0; i < rotatedPoints.length; i++) {
+            System.out.print("[");
+            for (int j = 0; j < rotatedPoints[i].length; j++) {
+                System.out.print(rotatedPoints[i][j]);
+                if (j < rotatedPoints[i].length - 1) {
+                    System.out.print(", ");
+                }
+            }
+            System.out.println("]");
+        }
     }
 }

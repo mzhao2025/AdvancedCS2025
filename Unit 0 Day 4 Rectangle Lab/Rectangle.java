@@ -46,12 +46,37 @@ public class Rectangle {
     public int getPerimeter() {
         return 2 * (length + width);
     }
-
+    
     public double getDiagonal() {
         return Math.sqrt(length * length + width * width);
     }
 
-    public int rotate90() {
-        return 0;
+    public int[][] rotate90(
+        int blCornerX, int blCornerY, int length, int width, int pivotX, int pivotY, int angle) {
+        int[][] rectPoints = {
+            {blCornerX, blCornerY},
+            {blCornerX + length, blCornerY},
+            {blCornerX + length, blCornerY + width},
+            {blCornerX, blCornerY + width}
+        };
+
+        int[][] rotatedPoints = new int[4][2];
+        double radians = Math.toRadians(angle);
+
+
+        for (int i = 0; i < 4; i++) {
+            int curX = rectPoints[i][0];
+            int curY = rectPoints[i][1];
+
+            rotatedPoints[i][0] = (int) Math.round(pivotX + (curX - pivotX) 
+                                    * Math.cos(radians) - (curY - pivotY) 
+                                    * Math.sin(radians));
+            rotatedPoints[i][1] = (int) Math.round(pivotY + (curX - pivotX) 
+                                    * Math.sin(radians) + (curY - pivotY) 
+                                    * Math.cos(radians));
+        }
+
+        return rotatedPoints;
+
     }
 }
