@@ -18,6 +18,10 @@ public class FRCRobot {
         budget = 10000;
     }
 
+    public String toString() {
+        return "Robot Name: " + name + ", Color: " + color + ", Cost: $" + cost + ", Weight: " + weight + " lbs, Speed: " + speed + " mph, Functioning: " + functioning;
+    }
+    
     public void takeApart() {
         System.out.println("Taking Apart Robot...");
         functioning = false;
