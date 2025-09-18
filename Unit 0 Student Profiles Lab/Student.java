@@ -19,14 +19,14 @@ public class Student {
         String id = "";
 
         for (int i = 0; i < 3; i++) {
-            int digit = (int)(Math.random() * 8) + 1; // 1–8
+            int digit = (int) (Math.random() * 8) + 1;
             id += digit;
         }
 
         id += "-";
     
         for (int i = 0; i < 4; i++) {
-            int digit = (int)(Math.random() * 10); // 0–9
+            int digit = (int) (Math.random() * 10);
             id += digit;
         }
 
@@ -62,8 +62,8 @@ public class Student {
     }
 
     public boolean equals(Student other) {
-        return (this.id == other.id) && (this.name == other.name) && (this.grade == other.grade);
+        return this.id.equals(other.id) 
+            && this.name.equals(other.name) 
+            && this.grade == other.grade;
     }
-
-
 }

@@ -1,4 +1,4 @@
-public class studentTester {
+public class StudentTester {
     public static void main(String[] args) {
         Student student1 = new Student("Alice", 12);
         Student student2 = new Student("Bob", 10);
