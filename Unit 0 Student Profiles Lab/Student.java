@@ -2,6 +2,8 @@ public class Student {
     private String name;
     private String id;
     private int grade;
+    private String latestOpp;
+    private String recentFriend;
 
     public Student(String name, int grade) {
         this.name = name;
@@ -15,22 +17,46 @@ public class Student {
         this.id = generateId();
     }
 
+    public String vibeCheck(Student other) {
+        if (this.latestOpp != null && this.latestOpp.equals(other.latestOpp)) {
+            this.setRecentFriend(other.name);
+            other.setRecentFriend(this.name);
+            return this.name + " and " + other.name 
+                + " are now friends; they both dislike " + this.latestOpp + ".";
+        } 
+        return this.name + " and " + other.name + " are not friends.";
+    }
+
     public String generateId() {
         String id = "";
 
         for (int i = 0; i < 3; i++) {
-            int digit = (int) (Math.random() * 8) + 1;
-            id += digit;
+            id += (int) (Math.random() * 8) + 1;
         }
 
         id += "-";
     
         for (int i = 0; i < 4; i++) {
-            int digit = (int) (Math.random() * 10);
-            id += digit;
+            id += (int) (Math.random() * 10);
         }
 
         return id;
+    }
+
+    public String getLatestOpp() {
+        return latestOpp;
+    }
+
+    public String getRecentFriend() {
+        return recentFriend;
+    }
+
+    public void setLatestOpp(String latestOpp) {
+        this.latestOpp = latestOpp;
+    }
+
+    public void setRecentFriend(String recentFriend) {
+        this.recentFriend = recentFriend;
     }
 
     public String getName() {
