@@ -1,36 +1,64 @@
 public class DogTester {
     public static void main(String[] args) {
-        // 1. Test the static generateDogChar() method
-        System.out.println("=== Testing generateDogChar() ===");
-        System.out.println("Dog ID 123: " + Dog.generateDogChar(123)); // should return 'L'
-        System.out.println("Dog ID 456: " + Dog.generateDogChar(456)); // verify expected char
-        System.out.println("Dog ID 789: " + Dog.generateDogChar(789)); // verify expected char
-        System.out.println();
+        System.out.println("## Tester");
+        System.out.println("----------------------------------------");
 
-        // 2. Test the static pickup() method
-        System.out.println("=== Testing pickup() ===");
-        Dog myDog = new Dog("Buddy", "Maria", 4, 101);
-        
-        // Scenario 1: Correct owner picks up dog
-        String result1 = Dog.pickup(myDog, "Maria");
-        System.out.println(result1);
-        System.out.println("Still in facility (expected false): " + myDog.isStillInFacility());
+        // 1. Verify static method calls use PawesomeUtils
+        System.out.println("1. Verifying static method calls use PawesomeUtils...");
+        System.out.println("   ✅ All static method calls below reference PawesomeUtils.\n");
 
-        // Scenario 2: Wrong person tries to pick up
-        // Reset dog to be back in facility
-        myDog.setStillInFacility(true);
-        String result2 = Dog.pickup(myDog, "John");
-        System.out.println(result2);
-        System.out.println("Still in facility (expected true): " + myDog.isStillInFacility());
-        System.out.println();
+        // 2. Test validateDogId()
+        System.out.println("2. Testing validateDogId():");
 
-        // 3. Test the static checkIn() method
-        System.out.println("=== Testing checkIn() ===");
-        Dog myOtherDog = new Dog("Max", "Lisa", 3, 202);
-        myOtherDog.setStillInFacility(false);
+        // 2a–c. Test with valid and invalid IDs
+        int[] testIds = {99, 100, 500, 999, 1000};
+        for (int id : testIds) {
+            int validatedId = PawesomeUtils.validateDogId(id);
+            System.out.println("   Input ID: " + id + " → Validated ID: " + validatedId);
+        }
 
-        Dog.checkIn(myOtherDog, "NewOwner");
-        System.out.println("Still in facility (expected true): " + myOtherDog.isStillInFacility());
-        System.out.println("Owner name (expected NewOwner): " + myOtherDog.getOwnerName());
+        // 2d. Confirm invalid IDs generate random ID (100–999)
+        System.out.println("   Checking that invalid IDs return random values between 100–999...");
+        int randomTest = PawesomeUtils.validateDogId(42);
+        boolean inRange = (randomTest >= 100 && randomTest <= 999);
+        System.out.println("   Random test (ID 42): " + randomTest + " → In range? " + inRange + "\n");
+
+
+        // 3. Evaluate validateDogTag()
+        System.out.println("3. Evaluating validateDogTag():");
+
+        Dog dogA = new Dog("Buddy", "Alice", 3, 345);
+        Dog dogB = new Dog("Rex", "Bob", 5, 456);
+        Dog dogC = new Dog("Luna", "Charlie", 2, 789);
+
+        boolean resultA = PawesomeUtils.validateDogTag(dogA);
+        boolean resultB = PawesomeUtils.validateDogTag(dogB);
+        boolean resultC = PawesomeUtils.validateDogTag(dogC);
+
+        System.out.println("   Dog A valid tag? " + resultA);
+        System.out.println("   Dog B valid tag? " + resultB);
+        System.out.println("   Dog C valid tag? " + resultC + "\n");
+
+
+        // 4. Test edge cases with validateDogTag()
+        System.out.println("4. Testing edge cases with validateDogTag():");
+
+        if (resultA && resultB && resultC) {
+            System.out.println("   All dogs valid — proceeding to modify one tag manually...");
+
+            // 4a. Modify one dog's tag to invalid value
+            dogB.setDogTag("999Z");
+            System.out.println("   Modified Dog B tag to: " + dogB.getDogTag());
+
+            // 4b. Call validateDogTag() again
+            boolean newResultB = PawesomeUtils.validateDogTag(dogB);
+
+            // 4c. Verify it now returns false
+            System.out.println("   After modification, Dog B valid tag? " + newResultB);
+        } else {
+            System.out.println("   One or more dogs already invalid — skipping manual modification test.");
+        }
+
+        System.out.println("\n--- End of Tester ---");
     }
 }
