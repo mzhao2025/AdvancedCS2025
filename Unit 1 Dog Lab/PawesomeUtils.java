@@ -23,9 +23,23 @@ public class PawesomeUtils {
         }
     }
 
-    public static void checkIn(Dog dog, String personName) {
-        dog.setStillInFacility(true);
+    public static String checkIn(Dog dog, String personName) {
         dog.setOwnerName(personName);
+        if (PawesomeUtils.validateDogTag(dog)) {
+            dog.setStillInFacility(true);
+            return "Successfully checked in " + dog.getName() + ".";
+        }
+        else {
+            int newDogId = PawesomeUtils.validateDogId(dog.getDogId());
+            char newDogChar = PawesomeUtils.generateDogChar(newDogId);
+            String newDogTag = PawesomeUtils.generateDogTag(newDogId, newDogChar);
+            dog.setDogId(newDogId);
+            dog.setDogChar(newDogChar);
+            dog.setDogTag(newDogTag);
+            dog.setStillInFacility(false);
+            return "Denied Access for " + dog.getName() + ". Note: Dog ID and Dog Tag have been updated to valid ones.";
+        }
+        
     }
 
     public static String generateDogTag(int dogId, char dogChar) {
@@ -50,7 +64,37 @@ public class PawesomeUtils {
         }
         else {
             return false;
-        };
+        }
+    }
+
+    public static int convertAgeToHumanAge(Dog dog) {
+        if (dog.getAge() == 1) {
+            return 15;
+        }
+        else if (dog.getAge() == 2) {
+            return 24;
+        }
+        else if (dog.getAge() > 2) {
+            return 24 + (dog.getAge() - 2) * 5;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    public static int convertAgeToDogYears(int humanYears) {
+        if (humanYears <= 0) {
+            return 0;
+        }
+        else if (humanYears <= 15) {
+            return 1;
+        }
+        else if (humanYears <= 24) {
+            return 2;
+        }
+        else {
+            return 2 + (humanYears - 24) / 5;
+        }
     }
 
     

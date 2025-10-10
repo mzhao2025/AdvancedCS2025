@@ -13,7 +13,7 @@ public class Dog {
         this.age = age;
         this.dogId = dogId;
         this.dogChar = Dog.generateDogChar(this.dogChar);
-        this.dogTag = this.dogTag = PawesomeUtils.generateDogTag(this.dogId, this.dogChar);
+        this.dogTag = PawesomeUtils.generateDogTag(this.dogId, this.dogChar);
         this.stillInFacility = true;
     }
 
@@ -23,7 +23,7 @@ public class Dog {
         this.age = 0;
         this.dogId = 0;
         this.dogChar = Dog.generateDogChar(this.dogChar);
-        this.dogTag = this.dogTag = PawesomeUtils.generateDogTag(this.dogId, this.dogChar);
+        this.dogTag = PawesomeUtils.generateDogTag(this.dogId, this.dogChar);
         this.stillInFacility = true;
     }
 
