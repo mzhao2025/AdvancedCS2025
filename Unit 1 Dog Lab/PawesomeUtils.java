@@ -42,6 +42,8 @@ public class PawesomeUtils {
         
     }
 
+    
+
     public static String generateDogTag(int dogId, char dogChar) {
         return "" + dogId + dogChar;
     }
@@ -55,17 +57,18 @@ public class PawesomeUtils {
         }
     }
 
-    public static Boolean validateDogTag(Dog dog) {
-        int dogId = dog.getDogId();
-        dogId = validateDogId(dogId);
-        String dogTag = "" + dogId + generateDogChar(dogId);
-        if (dogTag.equals(dog.getDogTag())) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    public static boolean validateDogTag(Dog dog) {
+        if (dog == null) return false;
+
+        int validId = validateDogId(dog.getDogId());
+        String dogTag = dog.getDogTag();
+    
+        char dogChar = generateDogChar(Integer.parseInt(dogTag.substring(0, dogTag.length()-1)));
+        char dogTagChar = dogTag.charAt(dogTag.length()-1);
+        return dogChar == dogTagChar;
+        
     }
+    
 
     public static int convertAgeToHumanAge(Dog dog) {
         if (dog.getAge() == 1) {
