@@ -32,8 +32,8 @@ public class Course {
         String line1 = "== " + courseName + " ==\n";
         String studentRecords = "";
         for (int i = 1; i <= this.studentRecords.length; i++) {
-            studentRecords += Integer.toString(i) + ".) " 
-                + this.studentRecords[i - 1].toString() + "\n";
+            studentRecords += Integer.toString(i) + ".) "
+                    + this.studentRecords[i - 1].toString() + "\n";
         }
         return line1 + studentRecords;
     }
@@ -76,7 +76,7 @@ public class Course {
 
     public boolean dropStudent(StudentRecord student) {
         for (int i = 0; i < studentRecords.length; i++) {
-            if (studentRecords[i] != null 
+            if (studentRecords[i] != null
                     && studentRecords[i].getName().equals(student.getName())) {
                 studentRecords[i] = null;
                 return true;
