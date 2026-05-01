@@ -5,6 +5,9 @@ public class Unit6Exercises {
      * of a given number n.
      */
     public static int factorial(int n) {
+        if (n == 0) {
+            return 1;
+        }
         for (int i = n; i > 1; i--) {
             n *= (i - 1);
         }
@@ -64,20 +67,33 @@ public class Unit6Exercises {
         if (n < 10) {
             return n;
         } else {
-            return (n % 10) + sumDigits(n / 10);
+            return (n % 10) + sumDigitsRecursive(n / 10);
         }
     }
 
-    /**dwsa
+    /*
      * Problem 4 - Count X: Write a recursive and non-recursive method that returns the count of
      * occurrences of 'x' in a given string.
      */
     public static int countX(String str) {
-        return 0;
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == ('x')) {
+                count += 1;
+            }
+        }
+        return count;
     }
 
     public static int countXRecursive(String str) {
-        return 0;
+        if (str.length() == 0) {
+            return 0;
+        }
+        if (str.substring(0, 1).equals("x")) {
+            return 1 + countXRecursive(str.substring(1));
+        } else {
+            return countXRecursive(str.substring(1));
+        }
     }
 
     /**
@@ -85,11 +101,19 @@ public class Unit6Exercises {
      * reverse of a given string.
      */
     public static String reverseString(String str) {
-        return "";
+        String reversed = "";
+
+        for (int i = str.length() - 1; i >= 0; i--) {
+            reversed += str.charAt(i);
+        }
+
+        return reversed;
     }
 
     public static String reverseStringRecursive(String str) {
-        return "";
+        if (str.length() <= 1) {
+            return str;
+        } return reverseStringRecursive(str.substring(1)) + str.substring(0, 1);
     }
 
     /**
@@ -97,11 +121,17 @@ public class Unit6Exercises {
      * returns the value of base raised to the power of exponent.
      */
     public static int power(int base, int exponent) {
-        return 0;
+        int result = 1;
+        for (int i = 0; i < exponent; i++) {
+            result *= base;
+        }
+        return result;
     }
 
     public static int powerRecursive(int base, int exponent) {
-        return 0;
+        if (exponent == 0) {
+            return 1;
+        } return base * powerRecursive(base, exponent - 1);
     }
 
     /**
@@ -109,12 +139,20 @@ public class Unit6Exercises {
      * whether a given string is a palindrome.
      */
     public static boolean isPalindrome(String str) {
-
-        return false;
+        for (int i = 0; i <= (int) str.length()/2; i++) {
+            if (str.charAt(i) != str.charAt(str.length() - i - 1)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static boolean isPalindromeRecursive(String str) {
-        return false;
+        if (str.length() <= 1) {
+            return true;
+        } else if (str.charAt(0) == str.charAt(str.length() - 1)) {
+            return isPalindromeRecursive(str.substring(1, str.length() - 1));
+        } return false;
     }
 
     /**
@@ -122,11 +160,20 @@ public class Unit6Exercises {
      * finds and returns the greatest common divisor of two numbers.
      */
     public static int gcd(int a, int b) {
-        return 0;
+        for (int i = Math.min(a, b); i >= 1 ; i--) {
+            if ((a % i == 0) && (b % i == 0)) {
+                return i;
+            }
+        }
+        return 1;
     }
 
     public static int gcdRecursive(int a, int b) {
-        return 0;
+        if (b == 0) {
+            return a;
+        } else {
+            return gcdRecursive(b, a % b);
+        }
     }
 
     /**
@@ -137,12 +184,25 @@ public class Unit6Exercises {
      */
 
     public static int bunnyEars(int bunnies) {
-        return 0;
-
+        int count = 0;
+        for (int i = 1; i <= bunnies; i++) {
+            if (i % 2 == 0) {
+                count += 3;
+            } else {
+                count += 2;
+            }
+        }
+        return count;
     }
 
     public static int bunnyEarsRecursive(int bunnies) {
-        return 0;
+        if (bunnies == 0) {
+            return 0;
+        } else if (bunnies % 2 == 0) {
+            return 3 + bunnyEarsRecursive(bunnies - 1);
+        } else {
+            return 2 + bunnyEarsRecursive(bunnies - 1);
+        }
     }
 
     /**
@@ -150,16 +210,39 @@ public class Unit6Exercises {
      * binary search algorithm to find and return the index of a given element in a sorted array.
      */
     public static int binarySearch(int[] arr, int key) {
-
-        return -1; // Element not found
-    }
-
-    public static int binarySearchRecursiveHelper(int[] arr, int key, int low, int high) {
+        int low = 0;
+        int high = arr.length - 1;
+    
+        while (low <= high) {
+            int curIndex = (low + high) / 2;
+    
+            if (arr[curIndex] == key) {
+                return curIndex;
+            } else if (arr[curIndex] < key) {
+                low = curIndex + 1;
+            } else {
+                high = curIndex - 1;
+            }
+        }
+    
         return -1;
     }
 
+    public static int binarySearchRecursiveHelper(int[] arr, int key, int low, int high) {
+        int curIndex = (int) (low + high)/2;
+        if (low > high) {
+            return -1;
+        } else if (arr[curIndex] == key) {
+            return curIndex;
+        } else if (arr[curIndex] < key) {
+            return binarySearchRecursiveHelper(arr, key, curIndex+1, high);
+        } else {
+            return binarySearchRecursiveHelper(arr, key, low, curIndex - 1);
+        }
+    }
+
      // DO NOT EDIT! Work on the helper version above this method. This method is to be used for testing purposes only.
-     public static int binarySearchRecursive(int[] arr, int key) {
+    public static int binarySearchRecursive(int[] arr, int key) {
         return binarySearchRecursiveHelper(arr, key, 0, arr.length-1); // Element not found
     }
 
