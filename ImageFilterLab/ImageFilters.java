@@ -9,38 +9,58 @@ public class ImageFilters {
         try {
             BufferedImage image;
     
-            // test invert colors
+            // 1. Invert Colors
             image = loadFile("images/landscape.jpg");
             invertColors(image);
-            saveFile("images/edited-invert-landscape.jpg", image);
+            saveFile("images/edited-invert.jpg", image);
     
-            // test grayscale by average
+            // 2. Grayscale by Average
             image = loadFile("images/landscape.jpg");
             grayScaleByAverage(image);
-            saveFile("images/edited-grayscale-landscape.jpg", image);
+            saveFile("images/edited-grayscale.jpg", image);
     
-            // test sepia
+            // 3. Sepia
             image = loadFile("images/landscape.jpg");
             sepia(image);
-            saveFile("images/edited-sepia-landscape.jpg", image);
+            saveFile("images/edited-sepia.jpg", image);
     
-            // test valencia
+            // 4. Valencia
             image = loadFile("images/landscape.jpg");
             valencia(image);
-            saveFile("images/edited-valencia-landscape.jpg", image);
+            saveFile("images/edited-valencia.jpg", image);
     
-            // test left mirror
+            // 5. Left Mirror
             image = loadFile("images/landscape.jpg");
             leftMirror(image);
-            saveFile("images/edited-left-mirror-landscape.jpg", image);
+            saveFile("images/edited-left-mirror.jpg", image);
     
-            // test right mirror
+            // 6. Right Mirror
             image = loadFile("images/landscape.jpg");
             rightMirror(image);
-            saveFile("images/edited-right-mirror-landscape.jpg", image);
+            saveFile("images/edited-right-mirror.jpg", image);
+
+            // 7. Arctic Chill
+            image = loadFile("images/landscape.jpg");
+            arcticChill(image);
+            saveFile("images/edited-arctic.jpg", image);
+    
+            // 8. Noisy TV
+            image = loadFile("images/landscape.jpg");
+            noisyTV(image);
+            saveFile("images/edited-noisyTV.jpg", image);
+    
+            // 9. Futuristic
+            image = loadFile("images/landscape.jpg");
+            futuristic(image);
+            saveFile("images/edited-futuristic.jpg", image);
+    
+            // 10. Flip Vertical
+            image = loadFile("images/landscape.jpg");
+            flipVertical(image);
+            saveFile("images/edited-vertical-flip.jpg", image);
     
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Error processing images: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -197,15 +217,76 @@ public class ImageFilters {
         // loop across the height and only the RIGHT half of the image
         for (int y = 0; y < height; y++) {
             for (int x = width / 2; x < width; x++) {
-    
-                // grab the RGB color values of a pixel on the right side
                 int pixel = image.getRGB(x, y);
-    
-                // find the matching pixel on the left side
                 int mirrorX = width - 1 - x;
-    
-                // copy the right pixel's color onto the left side
                 image.setRGB(mirrorX, y, pixel);
+            }
+        }
+    }
+    public static void arcticChill(BufferedImage image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+    
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Color color = new Color(image.getRGB(x, y), true);
+                // emphasize blues, tone down reds
+                int r = (int) (color.getRed() * 0.7);
+                int g = color.getGreen();
+                int b = Math.min(255, (int)(color.getBlue() * 1.2));
+    
+                image.setRGB(x, y, new Color(r, g, b).getRGB());
+            }
+        }
+    }
+
+    public static void noisyTV(BufferedImage image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Color color = new Color(image.getRGB(x, y), true);
+                
+                int noise = (int) (Math.random() * 70) - 35; // create random noise
+
+                int r = Math.min(255, Math.max(0, color.getRed() + noise));
+                int g = Math.min(255, Math.max(0, color.getGreen() + noise));
+                int b = Math.min(255, Math.max(0, color.getBlue() + noise));
+
+                image.setRGB(x, y, new Color(r, g, b).getRGB());
+            }
+        }
+    }
+
+    public static void futuristic(BufferedImage image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+    
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Color color = new Color(image.getRGB(x, y), true);
+                
+                // swap blue and red
+                int r = color.getBlue();
+                int g = (int)(color.getGreen() * 0.8);
+                int b = color.getRed();
+    
+                image.setRGB(x, y, new Color(r, g, b).getRGB());
+            }
+        }
+    }
+
+    public static void flipVertical(BufferedImage image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+    
+        // Loop through the top half only
+        for (int y = 0; y < height / 2; y++) {
+            for (int x = 0; x < width; x++) {
+                int pixel = image.getRGB(x, y);
+                int mirrorY = height - 1 - y;
+                image.setRGB(x, mirrorY, pixel);
             }
         }
     }
